@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
         initRecyclerView()
         binding.addFloatingButton.setOnClickListener {
+            registerForActivityResult()
             Intent(this, AddActivity::class.java).let{
                 startActivity(it)
             }
@@ -30,13 +31,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
     }
 
     private fun initRecyclerView(){
-        val dummyList = mutableListOf<Word>(
-            Word("weather","날씨","noun"),
-            Word("happy","기쁜","adjective"),
-            Word("walk","걷다","verb"),
-        )
+//        val dummyList = mutableListOf<Word>(
+//            Word("weather","날씨","noun"),
+//            Word("happy","기쁜","adjective"),
+//            Word("walk","걷다","verb"),
+//        )
 
-        wordAdapter = WordAdapter(dummyList,this)
+        wordAdapter = WordAdapter(mutableListOf(),this)
         binding.wordRecyclerviews.apply {
             adapter = wordAdapter
             layoutManager =
@@ -45,5 +46,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
                 DividerItemDecoration(applicationContext, LinearLayoutManager. VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }
+        Thread{
+            val list = AppDatabase.getInstance(this)?.wordDao()?.getAll()?: emptyList()
+            wordAdapter.list.addAll(list)
+            runOnUiThread{
+                wordAdapter.notifyDataSetChanged()
+            }
+            //setResult()
+            finish()
+
+        }.start()
+
     }
 }

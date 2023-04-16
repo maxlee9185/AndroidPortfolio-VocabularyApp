@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class WordAdapter(
-    private val list:MutableList<Word>,
+     val list:MutableList<Word>,
     private val itemClickListener: ItemClickListener? = null,
 
 ) : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
@@ -31,7 +31,7 @@ class WordAdapter(
         }
     }
 
-     class WordViewHolder(val binding: ItemWordBinding ) :RecyclerView.ViewHolder(binding.root){
+     class WordViewHolder(val binding: ItemWordBinding) : RecyclerView.ViewHolder(binding.root){
          fun bind(word: Word){
              binding.apply{
                  textTextView.text = word.text

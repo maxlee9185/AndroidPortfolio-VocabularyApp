@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
         initRecyclerView()
         binding.addFloatingButton.setOnClickListener {
-            registerForActivityResult()
+            //registerForActivityResult()
             Intent(this, AddActivity::class.java).let{
                 startActivity(it)
             }
